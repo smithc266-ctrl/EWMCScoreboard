@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EWMC 2027 — Sponsorship Scoreboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1c2330; --ink-soft:#5a6472; --parchment:#f7f4ee; --card:#fffdf9;
@@ -15,30 +12,30 @@
     --good:#2f7d54; --warn:#b06a1b; --dead:#9a3838; --radius:10px;
   }
   *{box-sizing:border-box;}
-  body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--parchment);padding:20px;line-height:1.45;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--parchment);padding:20px;line-height:1.45;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
   .tile{max-width:1240px;margin:0 auto;}
 
   .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
   .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 2px;}
-  .title{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:29px;line-height:1.05;margin:0;}
+  .title{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:600;font-size:29px;line-height:1.05;margin:0;}
   .title em{font-style:italic;font-weight:400;}
   .sample{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--warn);background:#fdf3e4;border:1px solid #f0dcc0;padding:4px 9px;border-radius:999px;}
   .sample::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--warn);}
 
-  .section-label{font-family:"Spectral",serif;font-size:16px;font-weight:600;margin:36px 0 14px;padding-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;border-top:2px solid var(--ink);}
+  .section-label{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:16px;font-weight:600;margin:36px 0 14px;padding-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;border-top:2px solid var(--ink);}
   .section-label::before{content:"";position:absolute;top:-2px;left:0;width:78px;height:2px;background:var(--gold);}
   .section-label::after{content:"◆";position:absolute;top:-11px;left:84px;font-size:10px;color:var(--gold);background:var(--parchment);padding:0 5px;}
-  .section-label span{font-size:11px;font-weight:600;font-family:"Inter";color:var(--ink-soft);letter-spacing:.03em;}
+  .section-label span{font-size:11px;font-weight:600;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink-soft);letter-spacing:.03em;}
 
   /* ---------- GOAL HERO ---------- */
   .hero{background:linear-gradient(135deg,#1c2330,#2b3547);color:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 4px 18px rgba(28,35,48,.18);}
   .hero .htop{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
   .hero .hlbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#aeb8c6;font-weight:600;margin-bottom:4px;}
-  .hero .hbig{font-family:"Spectral",serif;font-size:40px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;}
+  .hero .hbig{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:40px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;}
   .hero .hof{font-size:17px;color:#9aa5b4;font-weight:400;}
-  .hero .hpct{font-family:"Spectral",serif;font-size:40px;font-weight:600;color:var(--gold);line-height:1;}
-  .hero .hpct small{display:block;font-family:"Inter";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8f9bab;text-align:right;font-weight:600;margin-top:2px;}
+  .hero .hpct{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:40px;font-weight:600;color:var(--gold);line-height:1;}
+  .hero .hpct small{display:block;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8f9bab;text-align:right;font-weight:600;margin-top:2px;}
   .hbar{height:12px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;}
   .hbar span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#d8b45e);width:0;transition:width .6s;}
   .hbar.proj{height:5px;margin-top:5px;background:transparent;}
@@ -67,7 +64,7 @@
 
   /* ---------- OFFICIAL SPONSORS ---------- */
   .sptotal{display:inline-flex;gap:8px;align-items:baseline;font-size:12px;color:var(--ink-soft);}
-  .sptotal b{font-family:"Spectral",serif;font-size:15px;color:var(--gold);}
+  .sptotal b{font-family:ui-serif,Georgia,"Times New Roman",serif;font-size:15px;color:var(--gold);}
   .sponsors{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
   .scol{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;}
   .scol h3{font-size:12.5px;margin:0 0 8px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line);}
