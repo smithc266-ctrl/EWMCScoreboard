@@ -120,6 +120,18 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   .toast code{background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;}
 
+  .filters{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .filters input,.filters select{font:inherit;font-size:13px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+  .filters input{flex:1 1 170px;min-width:0;}
+  .filters input:focus,.filters select:focus{outline:none;border-color:var(--edit);box-shadow:0 0 0 3px rgba(27,111,179,.12);}
+  .filters #f-clear{cursor:pointer;color:var(--ink-soft);font-weight:600;background:none;}
+  .filters #f-clear:hover{background:#f0ece3;}
+  .roster-count{font-size:11.5px;color:var(--ink-soft);margin-bottom:8px;font-variant-numeric:tabular-nums;}
+  .roster-more{margin-top:10px;}
+  .roster-more button{font:inherit;font-size:13px;font-weight:600;color:var(--edit);background:#fff;border:1px solid #cfe0ef;border-radius:8px;padding:10px 18px;cursor:pointer;width:100%;}
+  .roster-more button:hover{background:var(--edit-bg);}
+  .roster-empty{padding:22px;text-align:center;color:var(--ink-soft);font-size:13px;font-style:italic;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);}
+
   /* Narrow-column mode */
   @media (max-width:720px){
     body{padding:12px;}
@@ -205,7 +217,15 @@
   <!-- ROSTER -->
   <div class="section-label">Sponsorship Dashboard <span>· tap a sponsor to edit</span></div>
   <div class="roster-cap"><span class="kbox"></span> Tapping a card opens its editable (blue) fields — Save writes them back to RE. Context in orange is read-only from RE.</div>
+  <div class="filters">
+    <input id="f-search" type="search" placeholder="Search sponsor name…">
+    <select id="f-fund"><option value="">All fundraisers</option></select>
+    <select id="f-lk"><option value="">All likelihoods</option><option>Confirmed</option><option>Speculative</option><option>Unlikely</option></select>
+    <button id="f-clear" type="button" hidden>Clear</button>
+  </div>
+  <div class="roster-count" id="roster-count"></div>
   <div class="roster" id="roster"></div>
+  <div class="roster-more" id="roster-more" hidden></div>
 
 </div>
 <div class="toast" id="toast"></div>
@@ -295,6 +315,21 @@ function renderSponsors(){
 }
 
 /* ---------- roster of tap-to-edit cards ---------- */
+const PAGE=12;
+let fSearch="",fFund="",fLk="",shown=PAGE;
+function getFiltered(){
+  return data.map((r,i)=>({r,i})).filter(({r})=>{
+    if(fSearch && !((r.name||"").toLowerCase().includes(fSearch))) return false;
+    if(fFund && r.fund!==fFund) return false;
+    if(fLk && r.lk!==fLk) return false;
+    return true;
+  });
+}
+function populateFundraisers(){
+  const set=[...new Set(data.map(r=>r.fund).filter(Boolean))].sort();
+  const sel=document.getElementById("f-fund");
+  set.forEach(f=>{const o=document.createElement("option");o.value=f;o.textContent=f;sel.appendChild(o);});
+}
 function fieldInput(f,r){
   const v=r[f.k];
   if(f.type==="tier") return `<select data-k="${f.k}"><option value=""></option>${TIERS.map(t=>`<option ${t===v?"selected":""}>${t}</option>`).join("")}</select>`;
@@ -329,7 +364,14 @@ function closeAll(){
 
 function renderRoster(){
   const host=document.getElementById("roster");host.innerHTML="";
-  data.forEach((r,i)=>{
+  const all=getFiltered();
+  const anyFilter=fSearch||fFund||fLk;
+  document.getElementById("roster-count").textContent = anyFilter
+    ? `Showing ${Math.min(shown,all.length)} of ${all.length} match${all.length===1?"":"es"} · ${data.length} total`
+    : `${data.length} sponsors`;
+  document.getElementById("f-clear").hidden=!anyFilter;
+  if(all.length===0){host.innerHTML=`<div class="roster-empty">No sponsors match those filters.</div>`;document.getElementById("roster-more").hidden=true;return;}
+  all.slice(0,shown).forEach(({r,i})=>{
     const card=document.createElement("div");card.className="rcard";
     const tierLabel=(r.lvl||r.tgt||"—").replace(/\s*\(.*\)/,"");
     const doorTxt=num(r.door)?usd(num(r.door)):"—";
@@ -369,10 +411,21 @@ function renderRoster(){
       });
     });
   });
+  const more=document.getElementById("roster-more");
+  if(all.length>shown){
+    more.hidden=false;
+    more.innerHTML=`<button type="button">Show ${Math.min(PAGE,all.length-shown)} more (${all.length-shown} remaining)</button>`;
+    more.querySelector("button").addEventListener("click",()=>{shown+=PAGE;renderRoster();});
+  } else { more.hidden=true; more.innerHTML=""; }
 }
 
 function toast(m){const t=document.getElementById("toast");t.innerHTML=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),3600);}
 
+populateFundraisers();
+document.getElementById("f-search").addEventListener("input",e=>{fSearch=e.target.value.trim().toLowerCase();shown=PAGE;renderRoster();});
+document.getElementById("f-fund").addEventListener("change",e=>{fFund=e.target.value;shown=PAGE;renderRoster();});
+document.getElementById("f-lk").addEventListener("change",e=>{fLk=e.target.value;shown=PAGE;renderRoster();});
+document.getElementById("f-clear").addEventListener("click",()=>{fSearch=fFund=fLk="";shown=PAGE;["f-search","f-fund","f-lk"].forEach(id=>document.getElementById(id).value="");renderRoster();});
 renderRoster();
 recompute();
 </script>
