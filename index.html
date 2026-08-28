@@ -3,120 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evening with Mackinac Center — Scoreboard</title>
+<title>EWMC 2027 — Sponsorship Scoreboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1c2330;          /* deep slate — primary text */
-    --ink-soft:#5a6472;     /* secondary text */
-    --parchment:#f7f4ee;    /* warm neutral panel */
-    --card:#fffdf9;         /* card surface */
-    --line:#e4ddd0;         /* hairline rules */
-    --gold:#a9852f;         /* EWMC gala accent — reserved for value/emphasis */
-    --gold-soft:#f2e9d4;
-    --edit:#1b6fb3;         /* the blue: reserved strictly for editable / writes-back */
-    --edit-bg:#eaf3fb;
-    --edit-bg-focus:#dcecfa;
-    --good:#2f7d54;
-    --warn:#b06a1b;
-    --dead:#9a3838;
-    --radius:10px;
+    --ink:#1c2330; --ink-soft:#5a6472; --parchment:#f7f4ee; --card:#fffdf9;
+    --line:#e4ddd0; --gold:#a9852f; --gold-soft:#f2e9d4;
+    --edit:#1b6fb3; --edit-bg:#eaf3fb; --re:#c98a3a; --re-bg:#fbf2e6;
+    --good:#2f7d54; --warn:#b06a1b; --dead:#9a3838; --radius:10px;
   }
   *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;}
-  body{
-    margin:0;
-    font-family:"Inter",system-ui,-apple-system,sans-serif;
-    color:var(--ink);
-    background:var(--parchment);
-    padding:20px;
-    line-height:1.45;
-  }
-  @media (prefers-reduced-motion: reduce){*{transition:none !important;}}
+  body{margin:0;font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--parchment);padding:20px;line-height:1.45;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+  .tile{max-width:1240px;margin:0 auto;}
 
-  .tile{max-width:1080px;margin:0 auto;}
-
-  /* ---- header ---- */
-  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
   .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:0 0 2px;}
-  .title{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:30px;line-height:1.05;margin:0;color:var(--ink);}
+  .title{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:29px;line-height:1.05;margin:0;}
   .title em{font-style:italic;font-weight:400;}
   .sample{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--warn);background:#fdf3e4;border:1px solid #f0dcc0;padding:4px 9px;border-radius:999px;}
   .sample::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--warn);}
 
-  /* ---- KPI row ---- */
-  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px;}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;position:relative;overflow:hidden;}
-  .kpi::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);opacity:.55;}
-  .kpi .lbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:6px;}
-  .kpi .val{font-family:"Spectral",Georgia,serif;font-size:30px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;}
-  .kpi .sub{font-size:12px;color:var(--ink-soft);margin-top:5px;}
-  .kpi.count .val{color:var(--gold);}
+  .section-label{font-family:"Spectral",serif;font-size:16px;font-weight:600;margin:36px 0 14px;padding-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;border-top:2px solid var(--ink);}
+  .section-label::before{content:"";position:absolute;top:-2px;left:0;width:78px;height:2px;background:var(--gold);}
+  .section-label::after{content:"◆";position:absolute;top:-11px;left:84px;font-size:10px;color:var(--gold);background:var(--parchment);padding:0 5px;}
+  .section-label span{font-size:11px;font-weight:600;font-family:"Inter";color:var(--ink-soft);letter-spacing:.03em;}
 
-  /* ---- goal bar ---- */
-  .goalwrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;margin:14px 0 22px;}
-  .goalwrap .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft);margin-bottom:8px;}
-  .goalwrap b{color:var(--ink);font-variant-numeric:tabular-nums;}
-  .bar{height:9px;background:var(--gold-soft);border-radius:999px;overflow:hidden;}
-  .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#c8a54e);width:0;transition:width .5s ease;}
+  /* ---------- GOAL HERO ---------- */
+  .hero{background:linear-gradient(135deg,#1c2330,#2b3547);color:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 4px 18px rgba(28,35,48,.18);}
+  .hero .htop{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+  .hero .hlbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#aeb8c6;font-weight:600;margin-bottom:4px;}
+  .hero .hbig{font-family:"Spectral",serif;font-size:40px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;}
+  .hero .hof{font-size:17px;color:#9aa5b4;font-weight:400;}
+  .hero .hpct{font-family:"Spectral",serif;font-size:40px;font-weight:600;color:var(--gold);line-height:1;}
+  .hero .hpct small{display:block;font-family:"Inter";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8f9bab;text-align:right;font-weight:600;margin-top:2px;}
+  .hbar{height:12px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;}
+  .hbar span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#d8b45e);width:0;transition:width .6s;}
+  .hbar.proj{height:5px;margin-top:5px;background:transparent;}
+  .hbar.proj span{background:repeating-linear-gradient(90deg,#d8b45e 0 6px,transparent 6px 11px);opacity:.75;}
+  .hsub{display:flex;justify-content:space-between;font-size:12px;color:#aeb8c6;margin-top:10px;flex-wrap:wrap;gap:8px;}
+  .hsub b{color:#eef1f5;font-variant-numeric:tabular-nums;}
+  .hsub .maps{color:#8f9bab;font-style:italic;}
 
-  /* ---- table ---- */
+  /* ---------- STATEMENT ---------- */
+  .stmt{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;}
+  .grp{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 16px;}
+  .grp .ghd{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid var(--line);}
+  .li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:4px 0;font-size:13px;}
+  .li span{color:var(--ink-soft);}
+  .li b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .grp.attn{border-color:#e7c9c1;background:#fdf5f3;}
+  .grp.attn .ghd{color:var(--dead);border-color:#eecfc8;}
+  .grp.attn .li span{color:#7e4a41;}
+  .grp.attn .li b{color:var(--dead);}
+  .grp.totals{background:#1c2330;border-color:#1c2330;}
+  .grp.totals .ghd{color:var(--gold);border-color:rgba(255,255,255,.15);}
+  .grp.totals .li span{color:#b9c2cf;}
+  .grp.totals .li b{color:#fff;font-size:15px;}
+  .grp.goal .ghd{color:var(--ink-soft);}
+  .li.maps span::after{content:" · maps to RE later";color:#b3ab99;font-style:italic;font-size:11px;}
+
+  /* ---------- OFFICIAL SPONSORS ---------- */
+  .sptotal{display:inline-flex;gap:8px;align-items:baseline;font-size:12px;color:var(--ink-soft);}
+  .sptotal b{font-family:"Spectral",serif;font-size:15px;color:var(--gold);}
+  .sponsors{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
+  .scol{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;}
+  .scol h3{font-size:12.5px;margin:0 0 8px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line);}
+  .scol h3 .cnt{font-size:11px;color:var(--ink-soft);font-weight:600;}
+  .scol .tieramt{font-size:10.5px;color:var(--gold);font-weight:600;margin:-4px 0 6px;}
+  .scol ul{margin:0;padding:0;list-style:none;font-size:12.5px;}
+  .scol li{padding:3px 0;border-bottom:1px dotted #ece5d6;}
+  .scol li:last-child{border-bottom:none;}
+  .scol .none{color:#b3ab99;font-style:italic;font-size:12px;}
+
+  /* ---------- DASHBOARD ---------- */
   .tablecard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
-  .tablecap{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);}
-  .tablecap h2{font-size:14px;margin:0;font-weight:600;letter-spacing:.02em;}
-  .legend{font-size:11.5px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:7px;}
-  .swatch{width:11px;height:11px;border-radius:3px;background:var(--edit-bg);border:1px solid var(--edit);}
+  .tablecap{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:8px;}
+  .tablecap h2{font-size:13px;margin:0;font-weight:600;}
+  .keys{display:flex;gap:14px;font-size:11px;color:var(--ink-soft);}
+  .keys i{font-style:normal;display:inline-flex;align-items:center;gap:6px;}
+  .kbox{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .kbox.blue{background:var(--edit-bg);border:1px solid var(--edit);}
+  .kbox.org{background:var(--re-bg);border:1px solid var(--re);}
   .scroll{overflow-x:auto;}
-  table{width:100%;border-collapse:collapse;font-size:13px;min-width:820px;}
-  thead th{text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:#faf7f1;}
-  thead th.editcol{color:var(--edit);}
-  tbody td{padding:9px 12px;border-bottom:1px solid #efe9dd;vertical-align:middle;font-variant-numeric:tabular-nums;}
+  table{border-collapse:collapse;font-size:12px;white-space:nowrap;}
+  thead th{position:sticky;top:0;text-align:left;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;padding:9px 10px;border-bottom:1px solid var(--line);background:#faf7f1;}
+  thead th.b{color:var(--edit);background:#eef5fb;}
+  thead th.o{color:var(--re);background:#fbf4ea;}
+  tbody td{padding:6px 10px;border-bottom:1px solid #efe9dd;font-variant-numeric:tabular-nums;}
   tbody tr:last-child td{border-bottom:none;}
-  tbody tr:hover{background:#faf8f2;}
-  .org{font-weight:600;color:var(--ink);}
-  .muted{color:var(--ink-soft);}
+  td.o{background:var(--re-bg);color:#7a5c33;}
+  td.re-strong{font-weight:600;color:#6b4e28;}
+  td.b{background:var(--edit-bg);}
+  td.b input, td.b select{font:inherit;color:var(--edit);font-weight:600;background:transparent;border:1px solid transparent;border-radius:6px;padding:3px 5px;width:100%;min-width:64px;cursor:pointer;}
+  td.b input:hover, td.b select:hover{border-color:#bcd8ee;background:#fff;}
+  td.b input:focus, td.b select:focus{outline:none;border-color:var(--edit);background:#fff;box-shadow:0 0 0 3px rgba(27,111,179,.15);cursor:text;}
+  td.b.num input{text-align:right;}
+  .org{font-weight:600;color:var(--ink)!important;}
+  .lk{font-size:10px;font-weight:600;padding:1px 6px;border-radius:999px;}
 
-  /* tier badges */
-  .tier{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;}
-  .t-present{background:#efe3c4;color:#7a5c12;}
-  .t-gold{background:#f4ecd6;color:#8a6e1e;}
-  .t-silver{background:#e9ecef;color:#4a5560;}
-  .t-bronze{background:#efe2d6;color:#7d5330;}
-  .t-table{background:#e7eef0;color:#3f5c63;}
-  .t-add{background:#eef0ea;color:#5a6350;}
-
-  /* editable (blue) cells */
-  td.edit{background:var(--edit-bg);}
-  td.edit input, td.edit select{
-    font:inherit;font-variant-numeric:tabular-nums;color:var(--edit);font-weight:600;
-    background:transparent;border:1px solid transparent;border-radius:6px;
-    padding:4px 6px;width:100%;min-width:70px;cursor:pointer;
-  }
-  td.edit input:hover, td.edit select:hover{border-color:#bcd8ee;background:#fff;}
-  td.edit input:focus, td.edit select:focus{outline:none;border-color:var(--edit);background:#fff;box-shadow:0 0 0 3px rgba(27,111,179,.15);cursor:text;}
-  td.edit.amount input{text-align:right;}
-  .dirty{position:relative;}
-  .dirty::after{content:"";position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--edit);}
-
-  /* status pill in read view fallback */
-  .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-top:1px solid var(--line);flex-wrap:wrap;}
-  .footnote{font-size:11.5px;color:var(--ink-soft);max-width:560px;}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap;}
+  .footnote{font-size:11px;color:var(--ink-soft);max-width:640px;}
   .btn{font:inherit;font-size:13px;font-weight:600;color:#fff;background:var(--edit);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;transition:background .15s;}
-  .btn:hover{background:#155a93;}
-  .btn:disabled{background:#b7c6d2;cursor:default;}
+  .btn:hover{background:#155a93;} .btn:disabled{background:#b7c6d2;cursor:default;}
   .btn:focus-visible{outline:3px solid rgba(27,111,179,.35);outline-offset:2px;}
-
-  /* toast */
-  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:all .3s ease;box-shadow:0 8px 24px rgba(0,0,0,.22);max-width:90vw;}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 8px 24px rgba(0,0,0,.22);max-width:90vw;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-  .toast code{background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:12px;}
-
-  @media (max-width:640px){
-    .kpis{grid-template-columns:1fr;}
-    .title{font-size:24px;}
-  }
+  .toast code{background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;}
 </style>
 </head>
 <body>
@@ -124,202 +119,215 @@
 
   <div class="head">
     <div>
-      <p class="eyebrow">Campaign 27-EWMC · Live Scoreboard</p>
-      <h1 class="title">An <em>Evening with</em> Mackinac Center</h1>
+      <p class="eyebrow">Campaign 27-EWMC · Sponsorship Scoreboard</p>
+      <h1 class="title">EWMC <em>2027</em> — an Evening with Mackinac Center</h1>
     </div>
-    <span class="sample">Sample data — not your live EWMC figures</span>
+    <span class="sample">Sample data — invented rows, not your live EWMC constituents</span>
   </div>
 
-  <div class="kpis">
-    <div class="kpi count">
-      <div class="lbl">Committed Sponsors</div>
-      <div class="val" id="k-count">0</div>
-      <div class="sub" id="k-count-sub">confirmed gifts</div>
+  <!-- GOAL HERO -->
+  <div class="hero">
+    <div class="htop">
+      <div>
+        <div class="hlbl">Raised toward event goal</div>
+        <div class="hbig"><span id="g-in">$0</span> <span class="hof">of <span id="g-goal">$500,000</span></span></div>
+      </div>
+      <div class="hpct"><span id="g-pct">0%</span><small>in the door</small></div>
     </div>
-    <div class="kpi">
-      <div class="lbl">In the Door</div>
-      <div class="val" id="k-raised">$0</div>
-      <div class="sub">committed &amp; funded</div>
-    </div>
-    <div class="kpi">
-      <div class="lbl">Potential in Door</div>
-      <div class="val" id="k-potential">$0</div>
-      <div class="sub" id="k-potential-sub">asks still open</div>
+    <div class="hbar"><span id="g-bar"></span></div>
+    <div class="hbar proj"><span id="g-barproj"></span></div>
+    <div class="hsub">
+      <span><b id="g-proj">$0</b> projected if speculative asks land (<span id="g-ppct">0%</span>)</span>
+      <span class="maps">Goal maps to Raiser's Edge later</span>
     </div>
   </div>
 
-  <div class="goalwrap">
-    <div class="row">
-      <span>Progress to event goal</span>
-      <span><b id="g-now">$0</b> of <b>$500,000</b> <span class="muted" id="g-pct">(0%)</span></span>
+  <!-- FINANCIAL STATEMENT -->
+  <div class="section-label">Financial Summary <span>· grouped the way the Overview sheet reads · recomputes live</span></div>
+  <div class="stmt">
+    <div class="grp">
+      <div class="ghd">Sponsorships</div>
+      <div class="li"><span>Projected + In</span><b id="f-proj">$0</b></div>
+      <div class="li"><span>Money In — in the door</span><b id="f-in">$0</b></div>
     </div>
-    <div class="bar"><span id="g-bar"></span></div>
+    <div class="grp">
+      <div class="ghd">Other Income</div>
+      <div class="li"><span>Additional Donations</span><b id="f-add">$0</b></div>
+      <div class="li"><span>Ticket Sales</span><b id="f-tix">$0</b></div>
+    </div>
+    <div class="grp attn">
+      <div class="ghd">⚠ Needs Attention</div>
+      <div class="li"><span>Money in, not yet counted — untagged or unconfirmed</span><b id="f-attn">$0</b></div>
+    </div>
+    <div class="grp totals">
+      <div class="ghd">Totals</div>
+      <div class="li"><span>Total Raised — actually in</span><b id="f-total">$0</b></div>
+      <div class="li"><span>Projected &amp; Money In</span><b id="f-ptotal">$0</b></div>
+    </div>
+    <div class="grp goal">
+      <div class="ghd">Vs. Goal</div>
+      <div class="li maps"><span>Event Goal</span><b id="f-goal">$500,000</b></div>
+      <div class="li"><span>Deficit / Surplus</span><b id="f-def">$0</b></div>
+      <div class="li"><span>Projected Deficit / Surplus</span><b id="f-pdef">$0</b></div>
+    </div>
   </div>
 
+  <!-- OFFICIAL SPONSORS -->
+  <div class="section-label">Official Sponsors
+    <span class="sptotal"><b id="sp-count">0</b> official sponsors · <b id="sp-amt">$0</b> confirmed</span>
+  </div>
+  <div class="sponsors" id="sponsors"></div>
+
+  <!-- DASHBOARD -->
+  <div class="section-label">Sponsorship Dashboard <span>· the working grid</span></div>
   <div class="tablecard">
     <div class="tablecap">
-      <h2>Sponsor &amp; Board Gifts</h2>
-      <span class="legend"><span class="swatch"></span> Blue columns are editable — they write back to RE</span>
+      <h2>Sponsor &amp; Board Rows</h2>
+      <div class="keys">
+        <i><span class="kbox blue"></span> Blue = editable, writes back to RE</i>
+        <i><span class="kbox org"></span> Orange = read-only, lives in RE</i>
+      </div>
     </div>
-    <div class="scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>Sponsor / Organization</th>
-            <th>Tier</th>
-            <th class="editcol">Ask Amount</th>
-            <th class="editcol">Status</th>
-            <th class="editcol">Table&nbsp;#</th>
-            <th>Assigned</th>
-            <th>Last Action</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
+    <div class="scroll"><table><thead><tr id="head"></tr></thead><tbody id="rows"></tbody></table></div>
     <div class="foot">
-      <p class="footnote">
-        Edits recompute the scoreboard live, the same way the Excel formulas do today.
-        <strong>Save changes</strong> is where the tile would POST the blue fields to your
-        HTTP-triggered Power Automate flow to write back into RE NXT. Nothing leaves this page in the prototype.
-      </p>
+      <p class="footnote">Editing a blue cell recomputes everything above instantly. <strong>Save changes</strong> is where the blue fields POST to your Power Automate write-back flow. Orange fields refresh from RE on load and never change here.</p>
       <button class="btn" id="save" disabled>Save changes</button>
     </div>
   </div>
-
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ---- sample data (clearly illustrative — not real EWMC constituents) ----
-const TIERS = {
-  "Presenting":      {cls:"t-present", label:"Presenting"},
-  "Gold":            {cls:"t-gold",    label:"Gold"},
-  "Silver":          {cls:"t-silver",  label:"Silver"},
-  "Bronze":          {cls:"t-bronze",  label:"Bronze"},
-  "Table Sponsor":   {cls:"t-table",   label:"Table Sponsor"},
-  "Additional Donation":{cls:"t-add",  label:"Add'l Donation"}
-};
-// status buckets mirror the Opportunity mapping we locked for the report
-const STATUS = {
-  "Committed":            "in",     // -> in the door
-  "Funded":               "in",
-  "Pending (Ask Made)":   "open",   // -> potential
-  "Conditional Pledge":   "open",
-  "Change of Strategy":   "off",    // -> neither
-  "Declined":             "off"
-};
-const GOAL = 500000;
+const TIERS=["Presenting Sponsor ($200k)","Sacred Honor ($100k)","Patriot ($50k)","Liberty ($25k)","Freedom ($10k)","Justice ($5k)","Additional Donation"];
+const TIER_AMT={"Presenting Sponsor ($200k)":200000,"Sacred Honor ($100k)":100000,"Patriot ($50k)":50000,"Liberty ($25k)":25000,"Freedom ($10k)":10000,"Justice ($5k)":5000,"Additional Donation":0};
+const LIKELIHOOD=["","Confirmed","Speculative","Unlikely"];
+const YESNO=["","Yes","No"];
+const GOAL=500000, TICKETS=42000;
 
-const data = [
-  {org:"Northwood Industries",     tier:"Presenting",    amt:200000, status:"Committed",          table:"1",  who:"Dana W.",   last:"Aug 18, 2026"},
-  {org:"Great Lakes Capital Group",tier:"Gold",          amt:50000,  status:"Committed",          table:"3",  who:"Marcus L.", last:"Aug 21, 2026"},
-  {org:"Saginaw Bay Foundation",   tier:"Silver",        amt:25000,  status:"Pending (Ask Made)", table:"",   who:"Priya S.",  last:"Aug 25, 2026"},
-  {org:"Chippewa Manufacturing",   tier:"Table Sponsor", amt:10000,  status:"Committed",          table:"7",  who:"Dana W.",   last:"Aug 12, 2026"},
-  {org:"Midland Family Fund",      tier:"Bronze",        amt:15000,  status:"Pending (Ask Made)", table:"",   who:"Marcus L.", last:"Aug 24, 2026"},
-  {org:"Huron Valley Partners",    tier:"Silver",        amt:25000,  status:"Committed",          table:"5",  who:"Priya S.",  last:"Aug 15, 2026"},
-  {org:"Cedar Street Advisors",    tier:"Table Sponsor", amt:10000,  status:"Change of Strategy", table:"",   who:"Dana W.",   last:"Aug 08, 2026"},
-  {org:"Thumb Regional Trust",     tier:"Additional Donation", amt:5000, status:"Committed",      table:"—",  who:"Marcus L.", last:"Aug 19, 2026"}
+const COLS=[
+  {k:"cid",t:"Constituent ID",c:"o"},{k:"name",t:"Constituent Name",c:"o",strong:true},
+  {k:"pc",t:"Primary Contact",c:"o"},{k:"fund",t:"Assigned Fundraiser",c:"o"},
+  {k:"tgt",t:"Target Sponsorship Level",c:"b",type:"tier"},
+  {k:"fa",t:"First Action",c:"o"},{k:"ra",t:"Most Recent Action",c:"o"},
+  {k:"pd",t:"Proposal Date",c:"o"},{k:"pa",t:"Proposal Amount",c:"o",money:true},
+  {k:"ps",t:"Proposal Status",c:"o"},{k:"who",t:"Who Made Ask",c:"o"},
+  {k:"lk",t:"Sponsorship Likelihood",c:"b",type:"lk"},{k:"lvl",t:"Sponsorship Level",c:"b",type:"tier"},
+  {k:"samt",t:"Sponsorship Amount",c:"b",type:"money"},{k:"sname",t:"Sponsoring Name",c:"b",type:"text"},
+  {k:"pledge",t:"Pledge Amount",c:"o",money:true},{k:"door",t:"Amount in Door",c:"o",money:true},
+  {k:"inv",t:"Invoice Created",c:"b",type:"yn"},{k:"guests",t:"Projected # Guests",c:"b",type:"num"},
+  {k:"notes",t:"Additional Notes",c:"b",type:"text"},
 ];
 
-let dirty = false;
-const usd = n => "$" + Math.round(n).toLocaleString("en-US");
-const usdK = n => n>=1000 ? "$" + (n/1000).toLocaleString("en-US",{maximumFractionDigits:0}) + "K" : usd(n);
+const data=[
+  {cid:"85001",name:"Summit Steel Co.",pc:"J. Panning",fund:"Dana W.",tgt:"Presenting Sponsor ($200k)",fa:"Jun 03",ra:"Aug 20",pd:"Jun 10",pa:200000,ps:"Committed",who:"Dana W.",lk:"Confirmed",lvl:"Presenting Sponsor ($200k)",samt:200000,sname:"Summit Steel",pledge:0,door:200000,inv:"Yes",guests:20,notes:""},
+  {cid:"85002",name:"Lakeside Holdings",pc:"A. Bookless",fund:"Marcus L.",tgt:"Sacred Honor ($100k)",fa:"May 28",ra:"Aug 18",pd:"Jun 12",pa:100000,ps:"Committed",who:"Marcus L.",lk:"Confirmed",lvl:"Sacred Honor ($100k)",samt:100000,sname:"",pledge:0,door:100000,inv:"Yes",guests:10,notes:""},
+  {cid:"85003",name:"Rivertown Bank",pc:"N. Irrer",fund:"Priya S.",tgt:"Patriot ($50k)",fa:"Jun 15",ra:"Aug 25",pd:"Jul 01",pa:50000,ps:"Pending (Ask Made)",who:"Priya S.",lk:"Speculative",lvl:"",samt:50000,sname:"",pledge:0,door:0,inv:"",guests:0,notes:"awaiting board vote"},
+  {cid:"85004",name:"Evergreen Foundation",pc:"R. Haworth",fund:"Dana W.",tgt:"Liberty ($25k)",fa:"May 20",ra:"Aug 15",pd:"Jun 08",pa:25000,ps:"Committed - Pledge",who:"Dana W.",lk:"Confirmed",lvl:"Liberty ($25k)",samt:25000,sname:"Evergreen Fdn.",pledge:15000,door:10000,inv:"Yes",guests:8,notes:"two installments"},
+  {cid:"85005",name:"Copperline LLC",pc:"",fund:"Marcus L.",tgt:"Freedom ($10k)",fa:"Jul 02",ra:"Aug 05",pd:"",pa:0,ps:"",who:"",lk:"Unlikely",lvl:"",samt:0,sname:"",pledge:0,door:0,inv:"",guests:0,notes:""},
+  {cid:"85006",name:"Meridian Group",pc:"K. Mauren",fund:"Priya S.",tgt:"Justice ($5k)",fa:"Jun 22",ra:"Aug 12",pd:"Jul 05",pa:5000,ps:"Committed",who:"Priya S.",lk:"Confirmed",lvl:"Justice ($5k)",samt:5000,sname:"",pledge:0,door:5000,inv:"Yes",guests:4,notes:""},
+  {cid:"85007",name:"Anonymous Friend",pc:"",fund:"Marcus L.",tgt:"Additional Donation",fa:"Aug 01",ra:"Aug 19",pd:"",pa:0,ps:"",who:"",lk:"Confirmed",lvl:"Additional Donation",samt:0,sname:"",pledge:0,door:15000,inv:"",guests:0,notes:"gala appeal gift"},
+  {cid:"85008",name:"Northgate Partners",pc:"D. Barker",fund:"Dana W.",tgt:"Liberty ($25k)",fa:"Jul 18",ra:"Aug 22",pd:"",pa:0,ps:"",who:"",lk:"Speculative",lvl:"",samt:0,sname:"",pledge:0,door:10000,inv:"",guests:0,notes:"arrived, not matched to a sponsor"},
+];
+
+const num=v=>Number(String(v??"").replace(/[^0-9.\-]/g,""))||0;
+const usd=n=>"$"+Math.round(n).toLocaleString("en-US");
+let dirty=false;
+
+function isOfficial(r){return r.lk==="Confirmed" && r.lvl!=="" && r.lvl!=="Additional Donation";}
 
 function recompute(){
-  let inDoor=0, potential=0, sponsors=0, openCount=0;
+  let proj=0,inDoor=0,addl=0,attn=0,offCount=0,offAmt=0;
   data.forEach(r=>{
-    const bucket = STATUS[r.status] || "off";
-    const amt = Number(r.amt)||0;
-    if(bucket==="in"){ inDoor+=amt; sponsors++; }
-    else if(bucket==="open"){ potential+=amt; openCount++; }
+    const door=num(r.door),samt=num(r.samt);
+    const confirmed=r.lk==="Confirmed",hasLvl=r.lvl!=="",isAddl=r.lvl==="Additional Donation";
+    if(confirmed&&hasLvl&&!isAddl){proj+=Math.max(samt,door);inDoor+=door;}
+    if(isAddl){addl+=door;}
+    if(door>0&&!isAddl&&(!hasLvl||!confirmed)){attn+=door;}
+    if(isOfficial(r)){offCount++;offAmt+=Math.max(samt,TIER_AMT[r.lvl]||0);}
   });
-  document.getElementById("k-count").textContent = sponsors;
-  document.getElementById("k-count-sub").textContent = sponsors===1?"confirmed gift":"confirmed gifts";
-  document.getElementById("k-raised").textContent = usd(inDoor);
-  document.getElementById("k-potential").textContent = usd(potential);
-  document.getElementById("k-potential-sub").textContent = openCount + (openCount===1?" ask still open":" asks still open");
-
-  const pct = Math.min(100, Math.round(inDoor/GOAL*100));
-  document.getElementById("g-now").textContent = usd(inDoor);
-  document.getElementById("g-pct").textContent = "("+pct+"%)";
-  document.getElementById("g-bar").style.width = pct+"%";
+  const total=inDoor+addl+TICKETS, ptotal=proj+addl+TICKETS;
+  const def=total-GOAL, pdef=ptotal-GOAL;
+  const S=(id,v)=>document.getElementById(id).textContent=v;
+  S("f-proj",usd(proj));S("f-in",usd(inDoor));S("f-add",usd(addl));S("f-attn",usd(attn));
+  S("f-tix",usd(TICKETS));S("f-total",usd(total));S("f-ptotal",usd(ptotal));S("f-goal",usd(GOAL));
+  S("f-def",(def<0?"−":"+")+usd(Math.abs(def)));
+  S("f-pdef",(pdef<0?"−":"+")+usd(Math.abs(pdef)));
+  document.getElementById("f-def").style.color=def<0?"var(--dead)":"var(--good)";
+  document.getElementById("f-pdef").style.color=pdef<0?"var(--dead)":"var(--good)";
+  // hero
+  const pct=Math.min(100,Math.round(total/GOAL*100)),ppct=Math.min(100,Math.round(ptotal/GOAL*100));
+  S("g-in",usd(total));S("g-proj",usd(ptotal));S("g-goal",usd(GOAL));S("g-pct",pct+"%");S("g-ppct",ppct+"%");
+  document.getElementById("g-bar").style.width=pct+"%";
+  document.getElementById("g-barproj").style.width=ppct+"%";
+  // official sponsors totals
+  S("sp-count",offCount);S("sp-amt",usd(offAmt));
+  renderSponsors();
 }
 
-function markDirty(td){
-  dirty = true;
-  document.getElementById("save").disabled = false;
-  td.classList.add("dirty");
+function renderSponsors(){
+  const host=document.getElementById("sponsors");host.innerHTML="";
+  TIERS.forEach(t=>{
+    const rows=data.filter(r=>r.lvl===t&&r.lk==="Confirmed");
+    const names=rows.map(r=> r.sname&&r.sname.trim()?r.sname:r.name);
+    const div=document.createElement("div");div.className="scol";
+    const tierAmt=TIER_AMT[t]?usd(TIER_AMT[t]):"—";
+    div.innerHTML=`<h3><span>${t.replace(/\s*\(.*\)/,"")}</span><span class="cnt">${names.length}</span></h3>`+
+      `<div class="tieramt">${tierAmt} tier</div>`+
+      (names.length?"<ul>"+names.map(n=>`<li>${n}</li>`).join("")+"</ul>":`<div class="none">None yet</div>`);
+    host.appendChild(div);
+  });
 }
+
+function markDirty(td){dirty=true;document.getElementById("save").disabled=false;td.dataset.dirty="1";}
 
 function render(){
-  const tb = document.getElementById("rows");
-  tb.innerHTML = "";
-  data.forEach((r,i)=>{
-    const tr = document.createElement("tr");
-    const tier = TIERS[r.tier] || {cls:"t-add",label:r.tier};
-
-    // read-only cells
-    const orgTd = `<td class="org">${r.org}</td>`;
-    const tierTd = `<td><span class="tier ${tier.cls}">${tier.label}</span></td>`;
-
-    // editable (blue) cells
-    const amtTd = document.createElement("td");
-    amtTd.className = "edit amount";
-    amtTd.innerHTML = `<input type="text" inputmode="numeric" value="${usd(r.amt)}" aria-label="Ask amount for ${r.org}">`;
-
-    const statusTd = document.createElement("td");
-    statusTd.className = "edit";
-    const opts = Object.keys(STATUS).map(s=>`<option ${s===r.status?"selected":""}>${s}</option>`).join("");
-    statusTd.innerHTML = `<select aria-label="Status for ${r.org}">${opts}</select>`;
-
-    const tableTd = document.createElement("td");
-    tableTd.className = "edit";
-    tableTd.innerHTML = `<input type="text" value="${r.table}" placeholder="—" aria-label="Table number for ${r.org}" style="max-width:64px">`;
-
-    // read-only tail
-    const whoTd = `<td class="muted">${r.who}</td>`;
-    const lastTd = `<td class="muted">${r.last}</td>`;
-
-    tr.innerHTML = orgTd + tierTd;
-    tr.appendChild(amtTd); tr.appendChild(statusTd); tr.appendChild(tableTd);
-    tr.insertAdjacentHTML("beforeend", whoTd + lastTd);
+  document.getElementById("head").innerHTML=COLS.map(c=>`<th class="${c.c}">${c.t}</th>`).join("");
+  const tb=document.getElementById("rows");tb.innerHTML="";
+  data.forEach((r)=>{
+    const tr=document.createElement("tr");
+    COLS.forEach(c=>{
+      const td=document.createElement("td");const val=r[c.k];
+      if(c.c==="o"){
+        td.className="o"+(c.strong?" re-strong":"");if(c.k==="name")td.classList.add("org");
+        td.textContent=c.money?(num(val)?usd(num(val)):"—"):(val===""||val==null?"—":val);
+      }else{
+        td.className="b"+((c.type==="money"||c.type==="num")?" num":"");
+        if(c.type==="tier"){
+          td.innerHTML=`<select><option value=""></option>${TIERS.map(t=>`<option ${t===val?"selected":""}>${t}</option>`).join("")}</select>`;
+          td.querySelector("select").addEventListener("change",e=>{r[c.k]=e.target.value;markDirty(td);recompute();});
+        }else if(c.type==="lk"){
+          td.innerHTML=`<select>${LIKELIHOOD.map(t=>`<option ${t===val?"selected":""}>${t||"—"}</option>`).join("")}</select>`;
+          td.querySelector("select").addEventListener("change",e=>{r[c.k]=(e.target.value==="—"?"":e.target.value);markDirty(td);recompute();});
+        }else if(c.type==="yn"){
+          td.innerHTML=`<select>${YESNO.map(t=>`<option ${t===val?"selected":""}>${t||"—"}</option>`).join("")}</select>`;
+          td.querySelector("select").addEventListener("change",e=>{r[c.k]=(e.target.value==="—"?"":e.target.value);markDirty(td);});
+        }else if(c.type==="money"){
+          td.innerHTML=`<input type="text" value="${num(val)?usd(num(val)):""}" placeholder="—">`;
+          const inp=td.querySelector("input");
+          inp.addEventListener("input",e=>{r[c.k]=num(e.target.value);markDirty(td);recompute();});
+          inp.addEventListener("blur",e=>{e.target.value=num(r[c.k])?usd(num(r[c.k])):"";});
+        }else if(c.type==="num"){
+          td.innerHTML=`<input type="text" inputmode="numeric" value="${val||""}" placeholder="—">`;
+          td.querySelector("input").addEventListener("input",e=>{r[c.k]=num(e.target.value);markDirty(td);});
+        }else{
+          td.innerHTML=`<input type="text" value="${(val||"").replace(/"/g,'&quot;')}" placeholder="—">`;
+          td.querySelector("input").addEventListener("input",e=>{r[c.k]=e.target.value;markDirty(td);recompute();});
+        }
+      }
+      tr.appendChild(td);
+    });
     tb.appendChild(tr);
-
-    // wire edits
-    const amtInput = amtTd.querySelector("input");
-    amtInput.addEventListener("input", e=>{
-      const clean = Number(String(e.target.value).replace(/[^0-9.]/g,""))||0;
-      data[i].amt = clean; markDirty(amtTd); recompute();
-    });
-    amtInput.addEventListener("blur", e=>{ e.target.value = usd(data[i].amt); });
-
-    statusTd.querySelector("select").addEventListener("change", e=>{
-      data[i].status = e.target.value; markDirty(statusTd); recompute();
-    });
-    tableTd.querySelector("input").addEventListener("input", e=>{
-      data[i].table = e.target.value; markDirty(tableTd);
-    });
   });
   recompute();
 }
 
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.innerHTML = msg;
-  t.classList.add("show");
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove("show"), 3600);
-}
-
-document.getElementById("save").addEventListener("click", ()=>{
-  const changed = data.filter((_,i)=>document.querySelectorAll("tbody tr")[i].querySelector(".dirty"));
-  document.querySelectorAll(".dirty").forEach(el=>el.classList.remove("dirty"));
-  dirty = false;
-  document.getElementById("save").disabled = true;
-  toast(`Would <code>POST</code> ${changed.length||"the edited"} row(s) to your Power Automate write-back flow`);
+function toast(m){const t=document.getElementById("toast");t.innerHTML=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),3600);}
+document.getElementById("save").addEventListener("click",()=>{
+  const n=document.querySelectorAll('td[data-dirty="1"]').length;
+  document.querySelectorAll('td[data-dirty="1"]').forEach(td=>td.dataset.dirty="");
+  dirty=false;document.getElementById("save").disabled=true;
+  toast(`Would <code>POST</code> ${n} edited blue field(s) to your Power Automate write-back flow`);
 });
-
 render();
 </script>
 </body>
