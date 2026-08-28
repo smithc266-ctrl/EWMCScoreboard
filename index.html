@@ -339,7 +339,13 @@ render();
         init: function (args) {
           args.ready({ showUI: true, title: "EWMC 2027 Scoreboard" });
         }
-      }
+      },
+      allowedOrigins: [
+        /^https:\/\/[\w\-\.]+\.blackbaud\.com$/,
+        /^https:\/\/[\w\-\.]+\.blackbaudcloud\.com$/,
+        /^https:\/\/[\w\-\.]+\.blackbaudhosting\.com$/,
+        /^https:\/\/[\w\-\.]+\.blackbaud\.dev$/
+      ]
     });
   } catch (e) { /* not in a host context — render standalone */ }
 })();
