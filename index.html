@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://sky.blackbaudcdn.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.blackbaud.com https://*.blackbaudcloud.com; img-src 'self' data:; frame-ancestors https://*.blackbaud.com https://*.blackbaudcloud.com https://*.blackbaudhosting.com;">
 <title>EWMC 2027 — Sponsorship Scoreboard</title>
 <script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 <style>
@@ -274,7 +275,7 @@ const data=[
 
 const num=v=>Number(String(v??"").replace(/[^0-9.\-]/g,""))||0;
 const usd=n=>"$"+Math.round(n).toLocaleString("en-US");
-const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 function isOfficial(r){return r.lk==="Confirmed" && r.lvl!=="" && r.lvl!=="Additional Donation";}
 
 function recompute(){
@@ -335,14 +336,14 @@ function populateFundraisers(){
   set.forEach(f=>{const o=document.createElement("option");o.value=f;o.textContent=f;sel.appendChild(o);});
 }
 function fieldInput(f,r){
-  const v=r[f.k];
-  if(f.type==="tier") return `<select data-k="${f.k}"><option value=""></option>${TIERS.map(t=>`<option ${t===v?"selected":""}>${t}</option>`).join("")}</select>`;
-  if(f.type==="lk")   return `<select data-k="${f.k}">${LIKELIHOOD.map(t=>`<option value="${t}" ${t===v?"selected":""}>${t||"—"}</option>`).join("")}</select>`;
-  if(f.type==="yn")   return `<select data-k="${f.k}">${YESNO.map(t=>`<option value="${t}" ${t===v?"selected":""}>${t||"—"}</option>`).join("")}</select>`;
-  if(f.type==="money")return `<input data-k="${f.k}" type="text" inputmode="numeric" value="${num(v)?usd(num(v)):""}" placeholder="—">`;
-  if(f.type==="num")  return `<input data-k="${f.k}" type="text" inputmode="numeric" value="${v||""}" placeholder="—">`;
-  if(f.type==="textarea") return `<textarea data-k="${f.k}" placeholder="—">${esc(v)}</textarea>`;
-  return `<input data-k="${f.k}" type="text" value="${esc(v)}" placeholder="—">`;
+  const v=r[f.k], k=esc(f.k);
+  if(f.type==="tier") return `<select data-k="${k}"><option value=""></option>${TIERS.map(t=>`<option ${t===v?"selected":""}>${esc(t)}</option>`).join("")}</select>`;
+  if(f.type==="lk")   return `<select data-k="${k}">${LIKELIHOOD.map(t=>`<option value="${esc(t)}" ${t===v?"selected":""}>${esc(t||"—")}</option>`).join("")}</select>`;
+  if(f.type==="yn")   return `<select data-k="${k}">${YESNO.map(t=>`<option value="${esc(t)}" ${t===v?"selected":""}>${esc(t||"—")}</option>`).join("")}</select>`;
+  if(f.type==="money")return `<input data-k="${k}" type="text" inputmode="numeric" value="${esc(num(v)?usd(num(v)):"")}" placeholder="—">`;
+  if(f.type==="num")  return `<input data-k="${k}" type="text" inputmode="numeric" value="${esc(v||"")}" placeholder="—">`;
+  if(f.type==="textarea") return `<textarea data-k="${k}" placeholder="—">${esc(v)}</textarea>`;
+  return `<input data-k="${k}" type="text" value="${esc(v)}" placeholder="—">`;
 }
 
 function buildEditor(i){
@@ -366,7 +367,7 @@ function closeAll(){
   });
 }
 
-function renderRoster(){
+function renderRoster(keepOpen){
   const host=document.getElementById("roster");host.innerHTML="";
   const all=getFiltered();
   const anyFilter=fSearch||fFund||fLk;
@@ -412,7 +413,7 @@ function renderRoster(){
         });
         recompute();
         toast(`Would <code>POST</code> ${esc(data[i].name)}'s updated fields to your Power Automate flow`);
-        renderRoster();
+        renderRoster(i);
       });
     });
   });
@@ -424,6 +425,12 @@ function renderRoster(){
   } else { more.hidden=true; more.innerHTML=""; }
   // subtle "scroll for more" shadow only when the rendered page overflows its box
   requestAnimationFrame(()=>{ host.classList.toggle("is-scrollable", host.scrollHeight>host.clientHeight+2); });
+  if(keepOpen!=null){
+    const cards=host.querySelectorAll(".rcard");
+    const vis=getFiltered().slice(0,shown);
+    const pos=vis.findIndex(({i})=>i===keepOpen);
+    if(pos>-1 && cards[pos]) cards[pos].querySelector(".rc-summary").click();
+  }
 }
 
 function toast(m){const t=document.getElementById("toast");t.innerHTML=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),3600);}
