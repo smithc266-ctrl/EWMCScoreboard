@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EWMC 2027 — Sponsorship Scoreboard</title>
+<script src="https://sky.blackbaudcdn.net/static/sky-addin-client/1/sky-addin-client.umd.min.js"></script>
 <style>
   :root{
     --ink:#1c2330; --ink-soft:#5a6472; --parchment:#f7f4ee; --card:#fffdf9;
@@ -326,6 +327,22 @@ document.getElementById("save").addEventListener("click",()=>{
   toast(`Would <code>POST</code> ${n} edited blue field(s) to your Power Automate write-back flow`);
 });
 render();
+</script>
+<script>
+/* SKY Add-in handshake — required for RE to display the tile (and to size its iframe).
+   Runs only inside a Blackbaud host; opening the URL directly just skips it. */
+(function () {
+  if (typeof BBSkyAddinClient === "undefined" || !BBSkyAddinClient.AddinClient) return;
+  try {
+    window._bbAddin = new BBSkyAddinClient.AddinClient({
+      callbacks: {
+        init: function (args) {
+          args.ready({ showUI: true, title: "EWMC 2027 Scoreboard" });
+        }
+      }
+    });
+  } catch (e) { /* not in a host context — render standalone */ }
+})();
 </script>
 </body>
 </html>
